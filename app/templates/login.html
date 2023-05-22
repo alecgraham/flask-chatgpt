@@ -1,0 +1,52 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Login Form</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type='text/javascript'>
+
+    function login(){
+        username = document.getElementById("username").value;
+        password = document.getElementById("password").value;
+        remember_me = document.getElementById("remember_me").checked;
+        data = {username:username, password:password, remember_me:remember_me};
+        $.ajax({
+            url: '/login',
+            method: 'POST',
+            data: data,
+            success:function(response){
+                if(response==1){
+                    console.log('Login Successful');
+                }else{
+                    console.log('Login Unsuccessful');
+                }
+            }
+        })
+    }
+</script>
+</head>
+<body>
+     {% if message %}
+      <div>{{ message }}</div> 
+      {% endif %}
+<div class="container">
+    <h2>Flask ChatGPT</h2>
+    <form method="post">
+        <br>
+        <div class="form-group">
+            Email: <input type="username" class="form-control" id="username" name="username" placeholder="Enter Username">
+        </div>
+        <div class="form-group">
+         Password: <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+        </div>  
+        <div class = "form=group">
+            <input type="checkbox" id="remember_me" name="remember_me" value="true">
+            <label for="remember_me"> Remember me.</label><br>
+        </div> 
+        <button class="btn btn-primary" onclick="login()">Login</button>
+    </form>
+</div>
+
+</body>
+</html>

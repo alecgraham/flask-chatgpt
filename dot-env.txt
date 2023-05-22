@@ -1,0 +1,3 @@
+DATABASE_URL = postgres://postgres:1234@postgres:5432/postgres
+OPENAI_API_KEY = 
+OPENAI_BASE = https://api.openai.com/v1/chat/completions
