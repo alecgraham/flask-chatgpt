@@ -17,7 +17,16 @@ if not db.check_db_exists():
 
 from dotenv import load_dotenv
 load_dotenv()
+
+# Check if using Azure or OpenAI API 
+api_type = os.environ.get('OPENAI_API_TYPE')
+if api_type == 'AZURE':
+    openai.api_type = api_type
+    openai.api_version = os.environ.get('OPENAI_API_VERSION')
+    openai.api_base = os.environ.get('OPENAI_API_BASE')
+
 openai.api_key = os.environ.get('OPENAI_API_KEY')
+
 system_prompt = "You are an AI assistant that talks like a pirate in rhyming couplets."
 
 def get_timestamp():
