@@ -1,5 +1,7 @@
 DATABASE_URL = postgres://postgres:1234@postgres:5432/postgres
+OPENAI_API_KEY=
+# Set below variables if using Azure OpenAI
 OPENAI_API_TYPE=
 OPENAI_API_BASE=
-OPENAI_API_KEY=
 OPENAI_API_VERSION=
+OPENAI_DEPLOYMENT=

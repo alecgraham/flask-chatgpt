@@ -1,6 +1,7 @@
 import psycopg2 as pg
 import os
 from datetime import datetime
+import time
 
 create_schema = "create schema chatgpt;"
 users_ddl = '''CREATE TABLE chatgpt.users (
@@ -55,9 +56,16 @@ def build_db():
   conn.close()
 
 def check_db_exists():
-  conn = connect_db()
-  cur = conn.cursor()
-  cur.execute("select schema_name from information_schema.schemata where schema_name = 'chatgpt'")
+  while 1:
+    try:
+      conn = connect_db()
+      cur = conn.cursor()
+      cur.execute("select schema_name from information_schema.schemata where schema_name = 'chatgpt'")
+    except pg.OperationalError:
+      print('Waiting for database to initialize')
+      time.sleep(5)
+    else:
+      break
   schema = cur.fetchall()
   if schema:
     return True
