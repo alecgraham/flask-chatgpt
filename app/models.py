@@ -49,7 +49,7 @@ class User:
             return True
         except Exception as e:
             print(e)
-            return False
+            return e
 
 
 @login_manager.user_loader

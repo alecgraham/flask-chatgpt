@@ -15,9 +15,21 @@ import openai
 if not db.check_db_exists():
     db.build_db()
 
-from dotenv import load_dotenv
-load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
+
+# Check if using Azure or OpenAI API 
+api_type = os.environ.get('OPENAI_API_TYPE')
+if api_type == 'AZURE':
+    openai.api_type = api_type
+    openai.api_version = os.environ.get('OPENAI_API_VERSION')
+    openai.api_base = os.environ.get('OPENAI_API_BASE')
+    deployment = os.environ.get('OPENAI_DEPLOYMENT')
+else:
+    deployment = None
+
 openai.api_key = os.environ.get('OPENAI_API_KEY')
+
 system_prompt = "You are an AI assistant that talks like a pirate in rhyming couplets."
 
 def get_timestamp():
@@ -83,7 +95,8 @@ def register():
             if created:
                 template = redirect(url_for('login'))
             else:
-                template = render_template('register.html', message = 'user not created')
+                #template = render_template('register.html', message = 'user not created')
+                raise Exception(created)
         except Exception as e:
             print(e)
             template = render_template('register.html', message=e)
@@ -116,7 +129,8 @@ def message():
         convo.add_message('user',content)
         chat = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-0301",
-            messages=convo.messages
+            messages=convo.messages,
+            engine=deployment
         )
         response = chat['choices'][0]['message']['content']
         convo.add_message('assistant',response)

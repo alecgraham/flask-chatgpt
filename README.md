@@ -12,6 +12,8 @@ An API KEY for OpenAI API or Azure OpenAI service API
 
 To deploy locally on docker rename the dot-env.txt file to .env and add your OpenAI API Key to the file.
 
+If using Azure OpenAI, set the additional environment variables specified.
+
 To build and deploy the docker containers run the following command within the project folder
 ```
     docker compose up --build
